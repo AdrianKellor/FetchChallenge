@@ -1,0 +1,699 @@
+{
+	"info": {
+		"_postman_id": "3109983e-9ad3-4a75-8f6b-3d465c418ab4",
+		"name": "Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Fetch Sample",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"points\", function() {",
+							"    ",
+							"    var id = pm.response.json().id;",
+							"    pm.sendRequest(`http://localhost:8080/receipts/${id}/points`, function (err, response) {",
+							"        pm.expect(response.json().points).to.equal(24);",
+							"    })",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"retailer\": \"Target\",\n  \"purchaseDate\": \"2022-01-01\",\n  \"purchaseTime\": \"13:01\",\n  \"items\": [\n    {\n      \"shortDescription\": \"Mountain Dew 12PK\",\n      \"price\": \"6.49\"\n    },{\n      \"shortDescription\": \"Emils Cheese Pizza\",\n      \"price\": \"12.25\"\n    },{\n      \"shortDescription\": \"Knorr Creamy Chicken\",\n      \"price\": \"1.26\"\n    },{\n      \"shortDescription\": \"Doritos Nacho Cheese\",\n      \"price\": \"3.35\"\n    },{\n      \"shortDescription\": \"Klarbrunn 12PK 12 FL OZ\",\n      \"price\": \"12.00\"\n    }\n  ],\n  \"total\": \"35.35\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/receipts/process",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"receipts",
+						"process"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "10 digit name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"points\", function() {",
+							"    ",
+							"    var id = pm.response.json().id;",
+							"    pm.sendRequest(`http://localhost:8080/receipts/${id}/points`, function (err, response) {",
+							"        pm.expect(response.json().points).to.equal(10);",
+							"    })",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"retailer\": \"Target1234 %$#@!@^**\",\n  \"purchaseDate\": \"2022-01-02\",\n  \"purchaseTime\": \"03:01\",\n  \"items\": [],\n  \"total\": \"35.35\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/receipts/process",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"receipts",
+						"process"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Date Odd",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"points\", function() {",
+							"    ",
+							"    var id = pm.response.json().id;",
+							"    pm.sendRequest(`http://localhost:8080/receipts/${id}/points`, function (err, response) {",
+							"        pm.expect(response.json().points).to.equal(6);",
+							"    })",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"retailer\": \"%$#@!@^**\",\n  \"purchaseDate\": \"2022-01-03\",\n  \"purchaseTime\": \"03:01\",\n  \"items\": [],\n  \"total\": \"35.35\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/receipts/process",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"receipts",
+						"process"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Time 2:00pm",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"points\", function() {",
+							"    ",
+							"    var id = pm.response.json().id;",
+							"    pm.sendRequest(`http://localhost:8080/receipts/${id}/points`, function (err, response) {",
+							"        pm.expect(response.json().points).to.equal(0);",
+							"    })",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"retailer\": \"%$#@!@^**\",\n  \"purchaseDate\": \"2022-01-02\",\n  \"purchaseTime\": \"14:00\",\n  \"items\": [],\n  \"total\": \"35.35\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/receipts/process",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"receipts",
+						"process"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Time after 2:00 before 4:00 (1)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"points\", function() {",
+							"    ",
+							"    var id = pm.response.json().id;",
+							"    pm.sendRequest(`http://localhost:8080/receipts/${id}/points`, function (err, response) {",
+							"        pm.expect(response.json().points).to.equal(10);",
+							"    })",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"retailer\": \"%$#@!@^**\",\n  \"purchaseDate\": \"2022-01-02\",\n  \"purchaseTime\": \"14:01\",\n  \"items\": [],\n  \"total\": \"35.35\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/receipts/process",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"receipts",
+						"process"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Time after 2:00 before 4:00 (2)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"points\", function() {",
+							"    ",
+							"    var id = pm.response.json().id;",
+							"    pm.sendRequest(`http://localhost:8080/receipts/${id}/points`, function (err, response) {",
+							"        pm.expect(response.json().points).to.equal(10);",
+							"    })",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"retailer\": \"%$#@!@^**\",\n  \"purchaseDate\": \"2022-01-02\",\n  \"purchaseTime\": \"15:59\",\n  \"items\": [],\n  \"total\": \"35.35\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/receipts/process",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"receipts",
+						"process"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Time 4:00pm",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"points\", function() {",
+							"    ",
+							"    var id = pm.response.json().id;",
+							"    pm.sendRequest(`http://localhost:8080/receipts/${id}/points`, function (err, response) {",
+							"        pm.expect(response.json().points).to.equal(0);",
+							"    })",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"retailer\": \"%$#@!@^**\",\n  \"purchaseDate\": \"2022-01-02\",\n  \"purchaseTime\": \"16:01\",\n  \"items\": [],\n  \"total\": \"35.35\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/receipts/process",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"receipts",
+						"process"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Round total",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"points\", function() {",
+							"    ",
+							"    var id = pm.response.json().id;",
+							"    pm.sendRequest(`http://localhost:8080/receipts/${id}/points`, function (err, response) {",
+							"        pm.expect(response.json().points).to.equal(75);",
+							"    })",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"retailer\": \"%$#@!@^**\",\n  \"purchaseDate\": \"2022-01-02\",\n  \"purchaseTime\": \"03:01\",\n  \"items\": [],\n  \"total\": \"35.00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/receipts/process",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"receipts",
+						"process"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Items - 0",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"points\", function() {",
+							"    ",
+							"    var id = pm.response.json().id;",
+							"    pm.sendRequest(`http://localhost:8080/receipts/${id}/points`, function (err, response) {",
+							"        pm.expect(response.json().points).to.equal(0);",
+							"    })",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"retailer\": \"%$#@!@^**\",\n  \"purchaseDate\": \"2022-01-02\",\n  \"purchaseTime\": \"03:01\",\n  \"items\": [],\n  \"total\": \"35.11\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/receipts/process",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"receipts",
+						"process"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Items - 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"points\", function() {",
+							"    ",
+							"    var id = pm.response.json().id;",
+							"    pm.sendRequest(`http://localhost:8080/receipts/${id}/points`, function (err, response) {",
+							"        pm.expect(response.json().points).to.equal(0);",
+							"    })",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"retailer\": \"%$#@!@^**\",\n  \"purchaseDate\": \"2022-01-02\",\n  \"purchaseTime\": \"03:01\",\n  \"items\": [\n      {\n      \"shortDescription\": \"1\",\n      \"price\": \"6.49\"\n    }\n    ],\n  \"total\": \"35.11\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/receipts/process",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"receipts",
+						"process"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Items - 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"points\", function() {",
+							"    ",
+							"    var id = pm.response.json().id;",
+							"    pm.sendRequest(`http://localhost:8080/receipts/${id}/points`, function (err, response) {",
+							"        pm.expect(response.json().points).to.equal(5);",
+							"    })",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"retailer\": \"%$#@!@^**\",\n  \"purchaseDate\": \"2022-01-02\",\n  \"purchaseTime\": \"03:01\",\n  \"items\": [\n      {\n      \"shortDescription\": \"1\",\n      \"price\": \"6.49\"\n    },{\n      \"shortDescription\": \"2\",\n      \"price\": \"12.25\"\n    }\n    ],\n  \"total\": \"35.11\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/receipts/process",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"receipts",
+						"process"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Items - 4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"points\", function() {",
+							"    ",
+							"    var id = pm.response.json().id;",
+							"    pm.sendRequest(`http://localhost:8080/receipts/${id}/points`, function (err, response) {",
+							"        pm.expect(response.json().points).to.equal(10);",
+							"    })",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"retailer\": \"%$#@!@^**\",\n  \"purchaseDate\": \"2022-01-02\",\n  \"purchaseTime\": \"03:01\",\n  \"items\": [\n{\n      \"shortDescription\": \"1\",\n      \"price\": \"6.49\"\n    },{\n      \"shortDescription\": \"2\",\n      \"price\": \"12.25\"\n    },{\n      \"shortDescription\": \"3\",\n      \"price\": \"1.26\"\n    },{\n      \"shortDescription\": \"4\",\n      \"price\": \"3.35\"\n    }],\n  \"total\": \"35.11\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/receipts/process",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"receipts",
+						"process"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Items - 5",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"points\", function() {",
+							"    ",
+							"    var id = pm.response.json().id;",
+							"    pm.sendRequest(`http://localhost:8080/receipts/${id}/points`, function (err, response) {",
+							"        pm.expect(response.json().points).to.equal(10);",
+							"    })",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"retailer\": \"%$#@!@^**\",\n  \"purchaseDate\": \"2022-01-02\",\n  \"purchaseTime\": \"03:01\",\n  \"items\": [\n    {\n      \"shortDescription\": \"1\",\n      \"price\": \"6.49\"\n    },{\n      \"shortDescription\": \"2\",\n      \"price\": \"12.25\"\n    },{\n      \"shortDescription\": \"3\",\n      \"price\": \"1.26\"\n    },{\n      \"shortDescription\": \"4\",\n      \"price\": \"3.35\"\n    },{\n      \"shortDescription\": \"5\",\n      \"price\": \"12.00\"\n    }\n    ],\n    \"total\": \"35.11\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/receipts/process",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"receipts",
+						"process"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Items - Descriptions",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"points\", function() {",
+							"    ",
+							"    var id = pm.response.json().id;",
+							"    pm.sendRequest(`http://localhost:8080/receipts/${id}/points`, function (err, response) {",
+							"        pm.expect(response.json().points).to.equal(15 + 4); // two items and description math",
+							"    })",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"retailer\": \"%$#@!@^**\",\n  \"purchaseDate\": \"2022-01-02\",\n  \"purchaseTime\": \"03:01\",\n  \"items\": [\n    {\n      \"shortDescription\": \"1\",\n      \"price\": \"9.99\"\n    },{\n      \"shortDescription\": \"12\",\n      \"price\": \"9.99\"\n    },{\n      \"shortDescription\": \"123\",\n      \"price\": \"9.99\"\n    },{\n      \"shortDescription\": \"1234\",\n      \"price\": \"9.99\"\n    },{\n      \"shortDescription\": \"12345\",\n      \"price\": \"9.99\"\n    },{\n      \"shortDescription\": \"123456\",\n      \"price\": \"9.99\"\n    }\n    ],\n    \"total\": \"35.11\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/receipts/process",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"receipts",
+						"process"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Multiple of 25 Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"points\", function() {",
+							"    ",
+							"    var id = pm.response.json().id;",
+							"    pm.sendRequest(`http://localhost:8080/receipts/${id}/points`, function (err, response) {",
+							"        pm.expect(response.json().points).to.equal(25);",
+							"    })",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"retailer\": \"%$#@!@^**\",\n  \"purchaseDate\": \"2022-01-02\",\n  \"purchaseTime\": \"03:01\",\n  \"items\": [],\n  \"total\": \"35.25\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/receipts/process",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"receipts",
+						"process"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
